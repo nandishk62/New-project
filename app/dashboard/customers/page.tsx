@@ -1,5 +1,5 @@
 import { lusitana } from '@/app/ui/fonts';
-import CustomersTable from '@/app/ui/customers/table';
+
 export default function Page() {
     return (
     
