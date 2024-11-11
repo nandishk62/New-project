@@ -5,7 +5,6 @@ export default function Page() {
     
     <div className="flex w-full items-center justify-between bg-red">
       <h1 className={`${lusitana.className} text-2xl`}>Customers</h1>
-      
     </div>
     
   
