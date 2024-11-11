@@ -10,9 +10,14 @@ export const metadata: Metadata = {
 };
 
 export default async function CustomerListPage(props: {
-  searchParams?: Record<string, string | undefined>;
+  searchParams?: Promise<{
+    query?: string;
+    page?: string;
+  }>;
 }) {
-  const query = props.searchParams?.query || '';
+  const searchParams = await props.searchParams;
+ // const query = props.searchParams?.query || '';
+  const query = searchParams?.query || '';
   
   // Fetch customers data based on the search query
   const rawCustomers = await fetchFilteredCustomers(query);
