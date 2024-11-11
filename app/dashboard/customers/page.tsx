@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function CustomerListPage(props: {
-  searchParams?: { query?: string };
+  searchParams?: Record<string, string | undefined>;
 }) {
   const query = props.searchParams?.query || '';
   
