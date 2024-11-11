@@ -1,13 +1,38 @@
-import { lusitana } from '@/app/ui/fonts';
+import { Suspense } from 'react';
+import { Metadata } from 'next';
+import { fetchFilteredCustomers } from '@/app/lib/data';
+import { FormattedCustomersTable } from '@/app/lib/definitions';
+import CustomersTable from '@/app/ui/customers/table';
+import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 
-export default function Page() {
-    return (
-    
-    <div className="flex w-full items-center justify-between bg-red">
-      <h1 className={`${lusitana.className} text-2xl`}>Customers</h1>
+export const metadata: Metadata = {
+  title: 'Customer List',
+};
+
+export default async function CustomerListPage(props: {
+  searchParams?: { query?: string };
+}) {
+  const query = props.searchParams?.query || '';
+  
+  // Fetch customers data based on the search query
+  const rawCustomers = await fetchFilteredCustomers(query);
+
+  // Format the customers data to match the expected `FormattedCustomersTable` type
+  const customers: FormattedCustomersTable[] = rawCustomers.map((customer) => ({
+    id: customer.id,
+    name: customer.name,
+    email: customer.email,
+    image_url: customer.image_url,
+    total_invoices: customer.total_invoices,
+    total_pending: customer.total_pending,
+    total_paid: customer.total_paid,
+  }));
+
+  return (
+    <div className="w-full">
+      <Suspense fallback={<InvoicesTableSkeleton />}>
+        <CustomersTable customers={customers} />
+      </Suspense>
     </div>
-    
-  
-  
   );
-  }
+}
