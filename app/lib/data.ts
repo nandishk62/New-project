@@ -217,13 +217,15 @@ export async function fetchFilteredCustomers(query: string) {
 }
 
 
+
+
 export async function createCustomer(data: { name: string; email: string; phone: string; address: string }) {
   const response = await fetch('/api/customers', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   });
-
+ 
   if (!response.ok) {
     throw new Error('Failed to create customer');
   }
